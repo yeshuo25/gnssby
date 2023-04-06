@@ -1,0 +1,269 @@
+#
+# supported :
+# [YYYY]       -> 4-digit year
+# [YY]         -> 2-digit year
+# [MONTH]      -> 2-digit month
+# [DAY]        -> 2-digit day of month
+# [HOUR]       -> 2-digit hour in day
+# [DDD]        -> 3-digit day of year
+# [WEEK]       -> 4-digit GPS week
+# [WOD]        -> 2-digit day of GPS week 
+# [WD]         -> 5-digit GPS day format [wwwwd]
+
+# host         -> remote address
+# remote_dir   -> remote directory  
+# lsub_dir     -> local sub-directory
+# ftp_type     -> ftp/tls/http
+# file_pattern -> 
+# step         -> epoch interval [hours]
+# 
+
+[global]
+local_dir         = G:/data/
+
+[CDDIS_TEST]
+host          = gdc.cddis.eosdis.nasa.gov
+remote_dir    = /gps/data/daily/[YYYY]/[DDD]/[YY]d
+lsub_dir      = obs/[YYYY][DDD]
+file_pattern  = ??????????????????????????????????.crx.*
+ftp_type      = tls
+step          = 24
+
+## short name 
+[CDDIS]
+host          = gdc.cddis.eosdis.nasa.gov
+remote_dir    = /gps/data/daily/[YYYY]/[DDD]/[YY]d
+lsub_dir      = obs/[YYYY][DDD]
+file_pattern  = ????[DDD]0.[YY]d.*
+ftp_type      = tls
+step          = 24
+
+## long name 
+[CDDIS_M]
+host          = gdc.cddis.eosdis.nasa.gov
+remote_dir    = /gps/data/daily/[YYYY]/[DDD]/[YY]d
+lsub_dir      = obs/[YYYY][DDD]
+file_pattern  = ??????????????????????????????????.crx.*
+ftp_type      = tls
+step          = 24
+
+
+## BRDC long name  start from 2015-280(2015-10-07)  BRDC00IGS_R_20152800000_01D_MN.rnx.gz
+## BRDM long name, start from 2019-329(2019-11-29)  BRDM00DLR_S_20193290000_01D_MN.rnx.gz
+[CDDIS_BRDC]
+host          = gdc.cddis.eosdis.nasa.gov
+remote_dir    = /pub/gps/data/daily/[YYYY]/brdc/
+lsub_dir      = brdc/
+file_pattern  = ????????????[YYYY][DDD]???????????.rnx.*
+ftp_type      = tls
+step          = 24
+
+## brdm short name, start from 2013-001, end at 2020-173(2020-06-21) brdm1730.20p.Z
+[CDDIS_BRDM]
+host          = gdc.cddis.eosdis.nasa.gov
+remote_dir    = /pub/gps/data/campaign/mgex/daily/rinex3/[YYYY]/brdm/
+lsub_dir      = brdc/
+file_pattern  = brdm[DDD]0.[YY]p.*
+ftp_type      = tls
+step          = 24
+
+# corg0520.20i.Z codg0520.20i.Z 
+[CDDIS_ION]
+host          = gdc.cddis.eosdis.nasa.gov
+remote_dir    = /pub/gps/products/ionex/[YYYY]/[DDD]/
+lsub_dir      = iono/[YYYY][DDD]
+file_pattern  = ????[DDD]0.[YY]i.*
+ftp_type      = tls
+step          = 24
+
+# CAS0MGXRAP_20183650000_01D_01D_DCB.BSX.gz
+# DLR format  YYYY-01-01 YYYY-04-01 YYYY-07-01 YYYY-10-01
+#     DLR0MGXFIN_20200920000_03L_07D_DCB.BSX.gz
+#     DLR0MGXFIN_20200920000_03L_01D_DCB.BSX.gz
+[CDDIS_CAS]
+host          = gdc.cddis.eosdis.nasa.gov
+remote_dir    = /pub/gps/products/mgex/dcb/[YYYY]/
+lsub_dir      = dcb/[YYYY][DDD]
+file_pattern  = ???????????[YYYY][DDD]?????????????DCB.BSX.*
+ftp_type      = tls
+step          = 24
+
+
+# IGS product
+[CDDIS_PRODUCT]
+host          = gdc.cddis.eosdis.nasa.gov
+remote_dir    = /pub/gps/products/[WEEK]/
+lsub_dir      = products/[YYYY][DDD]
+file_pattern  = ???[WD].[sc][pl][3k].*
+ftp_type      = tls
+step          = 24
+
+[CDDIS_PRE]
+host          = gdc.cddis.eosdis.nasa.gov
+remote_dir    = /gps/data/daily/[YYYY]/[DDD]/[YY]d
+lsub_dir      = snx/
+file_pattern  = ???[WD].sp3.*
+ftp_type      = tls
+step          = 24
+
+[CDDIS_PRE_orbit]
+host          = gdc.cddis.eosdis.nasa.gov
+remote_dir    = /gps/data/daily/[YYYY]/[DDD]/[YY]d
+lsub_dir      = obs/[YYYY][DDD]
+file_pattern  = ??????????????????????????????????.crx.*
+ftp_type      = tls
+step          = 24
+
+
+[ESA_PRE]
+host          = gdc.cddis.eosdis.nasa.gov
+remote_dir    = /gps/data/daily/[YYYY]/[DDD]/[YY]d
+lsub_dir      = obs/[YYYY][DDD]
+file_pattern  = ??????????????????????????????????.crx.*
+ftp_type      = tls
+step          = 24
+
+# GFZ long name product
+[GFZ_PREM]
+host          = gdc.cddis.eosdis.nasa.gov
+remote_dir    = /gps/data/daily/[YYYY]/[DDD]/[YY]d
+lsub_dir      = obs/[YYYY][DDD]
+file_pattern  = ??????????????????????????????????.crx.*
+ftp_type      = tls
+step          = 24
+
+
+# WUM long name product
+[WUM_PREM]
+host          = gdc.cddis.eosdis.nasa.gov
+remote_dir    = /gps/data/daily/[YYYY]/[DDD]/[YY]d
+lsub_dir      = obs/[YYYY][DDD]
+file_pattern  = ??????????????????????????????????.crx.*
+ftp_type      = tls
+step          = 24
+
+
+[iGMAS]
+host          = 222.240.181.170
+remote_dir    = /GPST/[YYYY]/[DDD]/daily/
+lsub_dir      = data/iGMAS/
+file_pattern  = ???????????d.*
+ftp_type      = ftp
+step          = 24
+user          = cs_data
+passwd        = datanudt
+
+[ESA]
+
+
+[grace]
+host          = isdcftp.gfz-potsdam.de
+remote_dir    = /grace/Level-1B/JPL/INSTRUMENT/RL02/[YYYY]/
+lsub_dir      = leopod/grace/[YYYY][DDD]
+file_pattern  = grace_1B_[YYYY]-[MONTH]-[DAY]_02.*
+ftp_type      = ftp
+step          = 24
+
+[grace-fo]
+host          = isdcftp.gfz-potsdam.de
+remote_dir    = /grace-fo/Level-1B/JPL/INSTRUMENT/RL04/[YYYY]/
+lsub_dir      = leopod/grace/[YYYY][DDD]
+file_pattern  = gracefo_1B_[YYYY]-[MONTH]-[DAY]_RL04.ascii.noLRI.*
+ftp_type      = ftp
+step          = 24
+
+[swarm_A]
+host          = swarm-diss.eo.esa.int
+remote_dir    = /Level1b/Entire_mission_data/GPSx_RO/Sat_A/
+lsub_dir      = leopod/swarm/[YYYY][DDD]        
+file_pattern  = ???????????????????[YYYY][MONTH][DAY]????????????????????????????.*
+ftp_type      = ftp
+step          = 24
+
+[swarm_B]
+host          = swarm-diss.eo.esa.int
+remote_dir    = /Level1b/Entire_mission_data/GPSx_RO/Sat_B/
+lsub_dir      = leopod/swarm/[YYYY][DDD]        
+file_pattern  = ???????????????????[YYYY][MONTH][DAY]????????????????????????????.*
+ftp_type      = ftp
+step          = 24
+
+[swarm_C]
+host          = swarm-diss.eo.esa.int
+remote_dir    = /Level1b/Entire_mission_data/GPSx_RO/Sat_C/
+lsub_dir      = leopod/swarm/[YYYY][DDD]        
+file_pattern  = ???????????????????[YYYY][MONTH][DAY]????????????????????????????.*
+ftp_type      = ftp
+step          = 24
+
+[swarm_A_RD]
+host          = swarm-diss.eo.esa.int
+remote_dir    = /Level2daily/Entire_mission_data/POD/RD/Sat_A/
+lsub_dir      = leopod/swarm/[YYYY][DDD]        
+file_pattern  = ???????????????????????????????????[YYYY][MONTH][DAY]????????????.*
+ftp_type      = ftp
+step          = 24
+
+[swarm_B_RD]
+host          = swarm-diss.eo.esa.int
+remote_dir    = /Level2daily/Entire_mission_data/POD/RD/Sat_B/
+lsub_dir      = leopod/swarm/[YYYY][DDD]        
+file_pattern  = ???????????????????????????????????[YYYY][MONTH][DAY]????????????.*
+ftp_type      = ftp
+step          = 24
+
+[swarm_C_RD]
+host          = swarm-diss.eo.esa.int
+remote_dir    = /Level2daily/Entire_mission_data/POD/RD/Sat_C/
+lsub_dir      = leopod/swarm/[YYYY][DDD]        
+file_pattern  = ???????????????????????????????????[YYYY][MONTH][DAY]????????????.*
+ftp_type      = ftp
+step          = 24
+
+[swarm_A_KIN]
+host          = swarm-diss.eo.esa.int
+remote_dir    = /Level2daily/Entire_mission_data/POD/KIN/Sat_A/
+lsub_dir      = leopod/swarm/[YYYY][DDD]        
+file_pattern  = ???????????????????????????????????[YYYY][MONTH][DAY]????????????.*
+ftp_type      = ftp
+step          = 24
+
+[swarm_B_KIN]
+host          = swarm-diss.eo.esa.int
+remote_dir    = /Level2daily/Entire_mission_data/POD/KIN/Sat_B/
+lsub_dir      = leopod/swarm/[YYYY][DDD]        
+file_pattern  = ???????????????????????????????????[YYYY][MONTH][DAY]????????????.*
+ftp_type      = ftp
+step          = 24
+
+[swarm_C_KIN]
+host          = swarm-diss.eo.esa.int
+remote_dir    = /Level2daily/Entire_mission_data/POD/KIN/Sat_C/
+lsub_dir      = leopod/swarm/[YYYY][DDD]        
+file_pattern  = ???????????????????????????????????[YYYY][MONTH][DAY]????????????.*
+ftp_type      = ftp
+step          = 24
+
+[GOP]
+host          = epncb.oma.be
+remote_dir    = gop/obs/[YYYY]/[DDD]/
+lsub_dir      = gop/obs/[YYYY][DDD]
+file_pattern  = ???????0.[YY]D.*
+ftp_type      = ftp
+step          = 24
+
+[GOP_M]
+host          = epncb.oma.be
+remote_dir    = /pub/obs/[YYYY]/[DDD]/
+lsub_dir      = gop/obs/[YYYY][DDD]
+file_pattern  = ????????????[YYYY][DDD]????????????????crx.*
+ftp_type      = ftp
+step          = 24
+
+[GOP_BRDC]
+host          = epncb.oma.be
+remote_dir    = /pub/obs/BRDC/[YYYY]/
+lsub_dir      = gop/brdc/
+file_pattern  = ????????????[YYYY][DDD]???????????????.*
+ftp_type      = ftp
+step          = 24

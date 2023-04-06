@@ -1,0 +1,99 @@
+######### Some addresses and directory  #########
+# 1 [CDDIS-FTPS] gdc.cddis.eosdis.nasa.gov  [ftp-tls]
+#       (1) /gps/data/daily/[YYYY]/[DDD]/[YY][d/f/g/h/i/l/m/n/o/p/q/s]
+#       (2) /gps/data/highrate/[YYYY]/[DDD]/[YY]d/[HOUR]/
+#       (3) /gps/data/campaign/mgex/daily/rinex3/[YYYY]/[DDD]/[YY]d[d/f/g/h/i/l/m/n/o/p/q/s]
+#       (4) /gps/products/[WEEK]
+#       (5) /gps/products/mgex/[WEEK]
+#       (6) /gps/products/mgex/dcb/[YYYY]
+#       (7) /gps/products/bias/[YYYY]
+#       (8) /gps/products/ionex/[YYYY]/[DDD]
+#       (9) /gps/products/troposphere/zpd/[YYYY]/[DDD]
+#
+# 2 [CDDIS-HTTPS] 
+#       https://cddis.nasa.gov     [https]
+#       (1) /archive/gnss/data/daily/[YYYY]/[DDD]/[YY][d/f/g/h/i/l/m/n/o/p/q/s]
+#       (2) /archive/gnss/products/mgex/[WEEK]/
+# 
+# 3 [IGN] 
+#       igs.ign.fr    [FTP]
+#       (1) /pub/igs/igscb/station/[log][log_9char][mgexlog]
+#       (2) /pub/igs/igscb/station/general/igs14_2132.atx 
+#       
+# 4 [WUH]
+#       igs.gnsswhu.cn     [FTP]
+#       (1) /pub/gps/data/daily/[YYYY]/[DDD]/[YY][d/f/g/h/i/l/m/n/o/p/q/s]
+#       (2) /pub/gps/products/[WEEK]
+#       
+# 5  [GFZ]      
+#       ftp.gfz-potsdam.de    [FTP]
+#       (1) /pub/GNSS/products/mgnss/[WEEK]
+#       
+# 6 [ESA-FTP]
+#       gssc.esa.int   [FTP]
+#       (1) /cddis/gnss/data/daily/[YYYY]/[DDD]/[YY][d/f/g/h/i/l/m/n/o/p/q/s]
+#       (2) /cddis/gnss/products/[WEEK]
+#       (3) /cddis/gnss/products/[WEEK]/mgex
+#       
+# 7 [ESA-HTTP]     
+#       http://navigation-office.esa.int  [http]
+#       (1) /products/gnss-products/[WEEK]/ESA0MGNFIN_[YYYY][DDD]0000_01D_05M_ORB.SP3.gz
+#       
+# 8 [GOP]      
+#       epncb.oma.be    [FTP]
+#       (1) /pub/obs/[YYYY]/[DDD]/VALA00ESP_R_20210690000_01D_30S_MO.crx.gz
+#       (2) /pub/obs/BRDC/[YYYY]/BRDC00GOP_R_[YYYY][DDD]0000_01D_MN.rnx.gz
+# 
+#       
+#       
+# 
+######### Frequently used addresses directory  #########
+
+
+
+######### Frequently File Format  #########
+# 1 rinex
+#       ??????????????????????????????????.crx.*
+#       ????[DDD]0.[YY]d.*
+#       ABMF00GLP_S_20210251600_15M_01S_MO.crx.gz  [highrate]
+# 2 brdm/brdc/brdn/brdx
+#       brdm1250.19p.Z
+#       brdc1250.19p.Z
+#       brdx1250.19p.Z
+#       BRDM00DLR_S_20200650000_01D_MN.rnx.gz
+#       BRDC00IGS_R_20200650000_01D_MN.rnx.gz
+#       BRDX00DLR_S_20200660000_01D_MN.rnx.gz
+#
+# 3 sp3/clk/erp/clk_05s
+#       ???????????[YYYY][DDD]????????????????.SP3.gz
+#       ???[WD].sp3.* 
+#       GBM0MGXRAP_20201170000_01D_05M_CLK.CLK.gz
+#       GBM0MGXRAP_20201170000_01D_30S_CLK.CLK.gz
+#       GBM0MGXRAP_20201170000_01D_01D_ERP.ERP.gz
+#       GBM0MGXRAP_20201170000_01D_01D_REL.BIA.gz
+        #COD0MGXFIN_20221560000_01D_01D_OSB.BIA.gz
+        #COD0MGXFIN_20221560000_01D_05M_ORB.SP3.gz
+        #COD0MGXFIN_20221560000_01D_15M_ATT.OBX.gz
+        #COD0MGXFIN_20221560000_01D_30S_CLK.CLK.gz
+        #COD0MGXFIN_20221560000_03D_12H_ERP.ERP.gz
+
+        #WUM0MGXFIN_20221560000_01D_01D_ERP.ERP.gz
+        #WUM0MGXFIN_20221560000_01D_15M_ORB.SP3.gz
+        #WUM0MGXFIN_20221560000_01D_30S_ATT.OBX.gz
+        #WUM0MGXFIN_20221560000_01D_30S_CLK.CLK.gz
+        #WUM0MGXRAP_20221570000_01D_01D_OSB.BIA.gz
+# 4 dcb
+#       CAS0MGXRAP_20201200000_01D_01D_OSB.BIA.gz
+#       DLR0MGXFIN_20192740000_03L_07D_DCB.BSX.gz
+# 5 ion
+#       corg0080.20i.Z
+#       codg0080.20i.Z
+#       whrg1200.20i.Z
+#       esrg1200.20i.Z
+#       carg1200.20i.Z
+# 6 snx
+#       igs[YY]P[WD]_all.snx.Z
+#       igs[YY]P[WEEK].snx.Z
+#       
+######### Frequently File Format  #########
+
