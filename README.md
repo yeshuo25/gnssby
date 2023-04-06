@@ -27,3 +27,10 @@ The multi-thread processing of python is recommended to achieve, but
 running multiple scripts with different configurations at the same time can improve the speed of downloading.
 #
 *******************************      Note      *******************************
+
+# Command
+## Windows
+python gnssby.py
+
+## Linux
+python3 gnssby.py
