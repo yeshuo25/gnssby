@@ -12,7 +12,7 @@ Python script for downloading of gnss data
 
 #
 
-Manual configuration changes are necessary for the downloading configure in gnssby.py.
+It is necessary to manually modify the configuration in gnssby.py.
 
 |  Variable   | Explanation  |
 |  ----  | ----  |
