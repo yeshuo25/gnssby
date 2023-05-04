@@ -22,7 +22,7 @@ def getDataSFTP(tstart,tend,AC,cfgFTP,sectionTable):
 
 	epoch = tstart
 	while(epoch<=tend):
-		logging.log(logging.DEBUG, 'getDataFTP: Time-> '+epoch.strftime("%Y-%m-%d %H:%m:%s"))		
+		logging.log(logging.DEBUG, 'getDataFTP: Time-> '+epoch.strftime("%Y-%m-%d %H:%M:%S"))		
 		# loop remote and local directory according to [file types]
 		for ifTypeDir in range(0,(1 if cfgFTP.get(AC,'remote_dir').find(FILE_TYPE) == -1  else len(typeList))):
 

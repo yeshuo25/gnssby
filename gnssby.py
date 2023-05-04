@@ -5,10 +5,13 @@ from gnssbySSH import *
 
 
 #################### configure ####################
-ts = datetime.datetime(2022,3,28)
-te = datetime.datetime(2022,3,29)
+ts = datetime.datetime(2019,1,1)
+te = datetime.datetime(2019,1,1)
 #AClist = ['HTTPS_RNX', 'HTTPS_AC', 'HTTPS_ACs', 'HTTPS_BRDM', 'HTTPS_CASDCB', 'HTTPS_DLRDCB', 'HTTPS_CORG', 'HTTPS_SNX', 'GFZ_Products', 'WHU_Products', 'WHU_AR', 'COD_Products', 'CNT_HTTP', 'SFTP_RNX', 'ESA_HTTP']
-AClist = ['GA_RNX']
+AClist = ['ucar_att2','ucar_clk2','ucar_RO2','ucar_clk2']
+AClist = ['grace-fo']
+AClist = ['GIPP']
+AClist = ['swarm_RD']
 #################### configure ####################
 
 

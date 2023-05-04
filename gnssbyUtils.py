@@ -212,8 +212,10 @@ def f_unzip_file(compressedFile):
 		if(compressedFile.endswith('.tar.gz') or compressedFile.endswith('.tar') or compressedFile.endswith('.tgz')):
 			command =  'tar zxvf '
 			root,ext = os.path.splitext(compressedFile)
+			print(root)
+			print(ext)
 			if ext in ['.gz', '.bz2']:
-				decompressName,tmpext = os.path.splitext(root)[0]
+				decompressName,tmpext = os.path.splitext(root)
 		elif(compressedFile.endswith('.Z')):
 			command =   'uncompress -dvf  '
 			decompressName,tmpext = os.path.splitext(compressedFile)
@@ -296,7 +298,7 @@ def getDataFTP(tstart,tend,AC,cfgFTP,sectionTable):
 
 	epoch = tstart
 	while(epoch<=tend):
-		logging.log(logging.DEBUG, 'getDataFTP: Time-> '+epoch.strftime("%Y-%m-%d %H:%m:%s"))		
+		logging.log(logging.DEBUG, 'getDataFTP: Time-> '+epoch.strftime("%Y-%m-%d %H:%M:%S"))		
 
 		# loop remote and local directory according to [file types]
 		for ifTypeDir in range(0,(1 if cfgFTP.get(AC,'remote_dir').find(FILE_TYPE) == -1  else len(typeList))):
@@ -370,7 +372,7 @@ def getDataFTP_TLS(tstart,tend,AC,cfgFTP,sectionTable):
 
 	epoch = tstart
 	while(epoch<=tend):
-		logging.log(logging.DEBUG, 'getDataFTP_TLS: Time-> '+epoch.strftime("%Y-%m-%d %H:%m:%s"))	
+		logging.log(logging.DEBUG, 'getDataFTP_TLS: Time-> '+epoch.strftime("%Y-%m-%d %H:%M:%S"))	
 
 		# loop remote and local directory according to [file types]
 		for ifTypeDir in range(0, (1 if cfgFTP.get(AC,'remote_dir').find(FILE_TYPE) == -1  else len(typeList))):
@@ -438,7 +440,7 @@ def getDataHTTP(tstart,tend,AC,cfgFTP,sectionTable):
 
 	epoch = tstart
 	while(epoch<=tend):
-		logging.log(logging.DEBUG, 'getDataHTTP: Time-> '+epoch.strftime("%Y-%m-%d %H:%m:%s"))	
+		logging.log(logging.DEBUG, 'getDataHTTP: Time-> '+epoch.strftime("%Y-%m-%d %H:%M:%S"))	
 
 		# loop remote and local directory according to [file types]
 		for ifTypeDir in range(0,(1 if cfgFTP.get(AC,'remote_dir').find(FILE_TYPE) == -1  else len(typeList))):
@@ -514,7 +516,7 @@ def getDataHTTPS(tstart,tend,AC,cfgFTP,sectionTable):
 
 	epoch = tstart
 	while(epoch<=tend):
-		logging.log(logging.DEBUG, 'getDataHTTPS: Time-> '+epoch.strftime("%Y-%m-%d %H:%m:%s"))		
+		logging.log(logging.DEBUG, 'getDataHTTPS: Time-> '+epoch.strftime("%Y-%m-%d %H:%M:%S"))		
 		# loop remote and local directory according to [file types]
 		for ifTypeDir in range(0,(1 if cfgFTP.get(AC,'remote_dir').find(FILE_TYPE) == -1  else len(typeList))):
 			# local directory
