@@ -12,7 +12,7 @@ Python script for downloading of gnss data
 
 #
 
-Manual configuration changes are necessary for the downloading configure in gnssby.py.
+It is necessary to manually modify the configuration in gnssby.py.
 
 |  Variable   | Explanation  |
 |  ----  | ----  |
@@ -23,7 +23,7 @@ Manual configuration changes are necessary for the downloading configure in gnss
 
 #
 
-The multi-thread processing of python is recommended to achieve, but 
+The multi-thread processing of python is not recommended to achieve, but 
 running multiple scripts with different configurations at the same time can improve the speed of downloading.
 #
 *******************************      Note      *******************************
