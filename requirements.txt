@@ -1,0 +1,8 @@
+# GNSSBY Requirements
+# Python 3.6+
+
+# HTTP/HTTPS downloads
+requests>=2.25.0
+
+# SFTP/SSH protocol support
+paramiko>=2.7.0

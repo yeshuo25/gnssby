@@ -1,79 +1,190 @@
-#!/usr/bin/python3 
-from gnssbyUtils import *
-# ftplib package is necessary for SFTP or SSH
-from gnssbySSH import *
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+GNSSBY - GNSS Data Downloader
+Main entry point for downloading GNSS data from various sources.
+
+Usage:
+    python gnssby.py
+
+Configuration:
+    Edit this file to set:
+        - ts: Start time
+        - te: End time
+        - AClist: List of analysis centers to download from
+
+    Configuration files:
+        - config.ini (Linux) or config_win.ini (Windows)
+        - listTable.ini (station filters)
+"""
+
+import sys
+import os
+import time
+import datetime
+import logging
+
+from gnssby.core.config_manager import ConfigManager
+from gnssby.downloaders.ftp import FTPDownloader
+from gnssby.downloaders.http import HTTPDownloader
+from gnssby.downloaders.https import HTTPSDownloader
+from gnssby.downloaders.sftp import SFTPDownloader
 
 
-#################### configure ####################
-ts = datetime.datetime(2019,1,1)
-te = datetime.datetime(2019,1,1)
-#AClist = ['HTTPS_RNX', 'HTTPS_AC', 'HTTPS_ACs', 'HTTPS_BRDM', 'HTTPS_CASDCB', 'HTTPS_DLRDCB', 'HTTPS_CORG', 'HTTPS_SNX', 'GFZ_Products', 'WHU_Products', 'WHU_AR', 'COD_Products', 'CNT_HTTP', 'SFTP_RNX', 'ESA_HTTP']
-AClist = ['ucar_att2','ucar_clk2','ucar_RO2','ucar_clk2']
-AClist = ['grace-fo']
-AClist = ['GIPP']
-AClist = ['swarm_RD']
-#################### configure ####################
+# ==================== Configuration ====================
+# Set your download time range
+ts = datetime.datetime(2019, 1, 1)
+te = datetime.datetime(2019, 1, 1)
+
+# Set analysis centers to download
+# Available AC types are defined in config.ini or config_win.ini
+AClist = ['HTTPS_RNX', 'HTTPS_AC', 'HTTPS_ACs', 'HTTPS_BRDM']
+# AClist = ['grace-fo']
+# AClist = ['swarm_RD']
+# AClist = ['ucar_att2', 'ucar_clk2', 'ucar_RO2']
+# ======================================================
 
 
-start = time.time()
-# logging 
-createLogger()
+def create_logger():
+    """Create and configure logger."""
+    log_format = "%(asctime)s - %(levelname)s - %(message)s"
+    date_format = "%m/%d/%Y %H:%M:%S"
 
-########## read config.ini ##########
-cfg = configparser.ConfigParser()
-cfgtable = configparser.ConfigParser(allow_no_value=True)
+    # Create log directory
+    if not os.path.exists("log_gnssby"):
+        os.mkdir("log_gnssby")
 
-if(platform.system() == "Linux"):    
-	configFile = 'config.ini'  
-elif(platform.system() == "Windows"):
-	configFile = 'config_win.ini'        
-else:
-	logging.log(logging.ERROR, "System platform have not been tested ! Please manually modify source code.")
-	logging.log(logging.ERROR, platform.system())
-	os._exit(1)
+    # Generate log filename
+    timestr = datetime.datetime.now().strftime("%Y%m%d_%H_%M_%S.txt")
+    logname = os.path.join('log_gnssby', timestr)
 
-if(not os.path.exists(configFile)):
-	logging.log(logging.ERROR, configFile + " does not exist!")
-	os._exit(1)	
+    # Configure logging
+    logging.basicConfig(
+        filename=logname,
+        level=logging.DEBUG,
+        format=log_format,
+        datefmt=date_format
+    )
 
-cfg.read(configFile)  
-cfgtable.read('listTable.ini')
+    # Also log to console
+    console = logging.StreamHandler(sys.stdout)
+    console.setLevel(logging.INFO)
+    console.setFormatter(logging.Formatter(log_format, date_format))
+    logging.getLogger().addHandler(console)
 
-# print all available Ac type for next update
-logging.log(logging.DEBUG, "************* available Ac Config *************")
-logging.log(logging.DEBUG, cfg.sections())
-logging.log(logging.DEBUG, "************* available Ac Config *************")
-logging.log(logging.DEBUG, "")
-
-########## List in AC list ##########
-for ac in  AClist:
-	if(len(ac) == 0):  # AC name  empty 
-		continue
-	logging.log(logging.DEBUG, "********* AC : "+ac+" *********")	
-	if(~cfg.has_section(ac)):  # AC name must be in config.ini 
-		logging.log(logging.DEBUG, " host = "+cfg.get(ac,'host'))
-		logging.log(logging.DEBUG, " remote_dir = "+cfg.get(ac,'remote_dir'))
-		logging.log(logging.DEBUG, " file_pattern = "+cfg.get(ac,'file_pattern'))
-		logging.log(logging.DEBUG, " ftp_type = "+cfg.get(ac,'ftp_type'))
-
-		if(cfg.get(ac,'ftp_type') == 'ftp'):
-			logging.log(logging.DEBUG, " Start downloading by ftp")
-			getDataFTP(ts,te,ac,cfg,cfgtable) 
-		elif(cfg.get(ac,'ftp_type') == 'tls'):
-			logging.log(logging.DEBUG, " Start downloading by ftp-tls")
-			getDataFTP_TLS(ts,te,ac,cfg,cfgtable) 
-		elif(cfg.get(ac,'ftp_type') == 'http'):
-			logging.log(logging.DEBUG, " Start downloading by http")
-			getDataHTTP(ts,te,ac,cfg,cfgtable) 
-		elif(cfg.get(ac,'ftp_type') == 'https'):
-			logging.log(logging.DEBUG, " Start downloading by https")
-			getDataHTTPS(ts,te,ac,cfg,cfgtable)  
-		elif(cfg.get(ac,'ftp_type') == 'sftp'):
-			logging.log(logging.DEBUG, " Start downloading by SSH/SFTP")
-			getDataSFTP(ts,te,ac,cfg,cfgtable) 	  
+    logging.info("=" * 60)
+    logging.info("GNSSBY - GNSS Data Downloader v2.0")
+    logging.info("=" * 60)
 
 
-logging.log(logging.DEBUG, " All downloads are over ")
+def get_downloader(config_manager, ac_name):
+    """
+    Create appropriate downloader based on ftp_type in config.
 
-end = time.time()
-print(end-start)
+    Args:
+        config_manager (ConfigManager): Configuration manager
+        ac_name (str): Analysis center name
+
+    Returns:
+        BaseDownloader: Appropriate downloader instance
+
+    Raises:
+        ValueError: If ftp_type is unsupported
+    """
+    if not config_manager.has_ac(ac_name):
+        raise ValueError(f"AC '{ac_name}' not found in configuration")
+
+    ftp_type = config_manager.config.get(ac_name, 'ftp_type')
+
+    if ftp_type == 'ftp':
+        return FTPDownloader(config_manager, ac_name, use_tls=False)
+
+    elif ftp_type == 'tls':
+        return FTPDownloader(config_manager, ac_name, use_tls=True)
+
+    elif ftp_type == 'http':
+        return HTTPDownloader(config_manager, ac_name)
+
+    elif ftp_type == 'https':
+        # Detect special HTTPS modes
+        if 'swarm' in ac_name.lower():
+            return HTTPSDownloader(config_manager, ac_name, mode='swarm')
+        elif config_manager.config.has_option(ac_name, 'nasa_user'):
+            return HTTPSDownloader(config_manager, ac_name, mode='nasa')
+        else:
+            return HTTPSDownloader(config_manager, ac_name, mode='standard')
+
+    elif ftp_type == 'sftp':
+        return SFTPDownloader(config_manager, ac_name)
+
+    else:
+        raise ValueError(f"Unsupported ftp_type: {ftp_type} for AC: {ac_name}")
+
+
+def main():
+    """Main function."""
+    start_time = time.time()
+
+    # Create logger
+    create_logger()
+
+    # Load configuration
+    try:
+        config_manager = ConfigManager()
+        logging.info("Configuration loaded successfully")
+    except Exception as e:
+        logging.error(f"Failed to load configuration: {e}")
+        sys.exit(1)
+
+    # Log available ACs
+    config_manager.log_available_acs()
+    logging.info("")
+    logging.info(f"Download time range: {ts} to {te}")
+    logging.info(f"Analysis centers to download: {AClist}")
+    logging.info("")
+
+    # Process each AC in the list
+    for ac_name in AClist:
+        if not ac_name:  # Skip empty strings
+            continue
+
+        logging.info("=" * 60)
+        logging.info(f"Processing AC: {ac_name}")
+        logging.info("=" * 60)
+
+        try:
+            # Get AC configuration
+            ac_config = config_manager.get_ac_config(ac_name)
+            logging.debug(f"Host: {ac_config.get('host', 'N/A')}")
+            logging.debug(f"Remote dir: {ac_config.get('remote_dir', 'N/A')}")
+            logging.debug(f"File pattern: {ac_config.get('file_pattern', 'N/A')}")
+            logging.debug(f"FTP type: {ac_config.get('ftp_type', 'N/A')}")
+
+            # Create downloader
+            downloader = get_downloader(config_manager, ac_name)
+
+            # Start download
+            downloader.download(ts, te)
+
+            logging.info(f"Completed AC: {ac_name}")
+
+        except Exception as e:
+            logging.error(f"Error processing AC '{ac_name}': {e}")
+            import traceback
+            logging.debug(traceback.format_exc())
+            continue
+
+        logging.info("")
+
+    # Summary
+    end_time = time.time()
+    elapsed = end_time - start_time
+
+    logging.info("=" * 60)
+    logging.info("All downloads completed")
+    logging.info(f"Total time elapsed: {elapsed:.2f} seconds ({elapsed/60:.2f} minutes)")
+    logging.info("=" * 60)
+
+
+if __name__ == "__main__":
+    main()
