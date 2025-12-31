@@ -409,7 +409,7 @@ Chao Yu.
 ## 📧 联系方式
 
 - Issues: https://github.com/yeshuo25/gnssby/issues
-- Email: chaoyu_shao@gmail.com
+- Email: chaoyu.shao@gmail.com
 - 上海天文台
 
 ## 🙏 致谢
