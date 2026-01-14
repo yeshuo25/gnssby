@@ -259,6 +259,14 @@ class BaseDownloader(ABC):
 
             logging.debug(f"Pattern: {pattern}, Matched: {len(matched_files)} files")
 
+            # Determine which type_index to use for rename_pattern
+            # If file_pattern has [file_type], use i_type_file (matches file_type_pattern)
+            # If file_pattern doesn't have [file_type], use the passed type_index (matches remote_dir)
+            if '[file_type]' in self.file_pattern:
+                rename_type_index = i_type_file
+            else:
+                rename_type_index = type_index
+
             # Download matched files
             for filename in matched_files:
                 self._download_single_file(
@@ -266,7 +274,7 @@ class BaseDownloader(ABC):
                     remote_path,
                     local_dir,
                     epoch,
-                    i_type_file
+                    rename_type_index
                 )
 
     def _download_single_file(self, filename, remote_path, local_dir, epoch, type_index):
