@@ -121,9 +121,8 @@ class BaseDownloader(ABC):
 
         # Create directory if it doesn't exist
         if not os.path.exists(local_dir):
-            os.makedirs(local_dir)
+            os.makedirs(local_dir, exist_ok=True)
             logging.debug(f"Created local directory: {local_dir}")
-
         return local_dir + os.sep
 
     def should_download_station(self, filename):

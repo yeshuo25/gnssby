@@ -33,12 +33,13 @@ from gnssby.downloaders.sftp import SFTPDownloader
 
 # ==================== Configuration ====================
 # Set your download time range
-ts = datetime.datetime(2019, 1, 1)
-te = datetime.datetime(2019, 1, 1)
+ts = datetime.datetime(2021, 8, 25)
+te = datetime.datetime(2021, 8, 25)
 
 # Set analysis centers to download
 # Available AC types are defined in config.ini or config_win.ini
 AClist = ['HTTPS_RNX', 'HTTPS_AC', 'HTTPS_ACs', 'HTTPS_BRDM']
+AClist = ['WHU_SNX']
 # AClist = ['grace-fo']
 # AClist = ['swarm_RD']
 # AClist = ['ucar_att2', 'ucar_clk2', 'ucar_RO2']
